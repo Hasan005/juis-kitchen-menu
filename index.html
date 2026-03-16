@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jui's Kitchen — Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep:  #1b4332;
+    --green-mid:   #2d6a4f;
+    --green-light: #52a475;
+    --gold:        #c9973a;
+    --gold-light:  #f0d080;
+    --cream:       #fdf6e3;
+    --cream-dark:  #f4ead0;
+    --text:        #1c1c1c;
+    --text-muted:  #5a6a5e;
+    --white:       #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Header ─────────────────────────────────────────────────────────── */
+  .site-header {
+    background: var(--green-deep);
+    padding: 28px 20px 20px;
+    text-align: center;
+    position: relative;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  .header-ornament {
+    color: var(--gold);
+    font-size: 14px;
+    letter-spacing: 6px;
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+
+  .site-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 8vw, 3rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+  }
+
+  .site-header .phone {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--gold-light);
+    letter-spacing: 0.5px;
+  }
+
+  .site-header .phone span {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--white);
+  }
+
+  /* ── Section nav pills ───────────────────────────────────────────────── */
+  .nav-pills {
+    display: flex;
+    gap: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    background: var(--green-deep);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(201,151,58,0.3);
+  }
+  .nav-pills::-webkit-scrollbar { display: none; }
+
+  .nav-pill {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(201,151,58,0.5);
+    color: var(--gold-light);
+    font-size: 12px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .nav-pill:hover, .nav-pill.active {
+    background: var(--gold);
+    color: var(--green-deep);
+    border-color: var(--gold);
+  }
+
+  /* ── Main content ─────────────────────────────────────────────────────── */
+  main { padding: 0 0 60px; }
+
+  /* ── Section ─────────────────────────────────────────────────────────── */
+  .menu-section {
+    margin: 0;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .menu-section.visible { opacity: 1; transform: none; }
+
+  .section-header {
+    padding: 22px 20px 0;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .section-title-wrap { flex: 1; }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--green-deep);
+    line-height: 1.2;
+  }
+
+  .section-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 3px;
+  }
+
+  .section-gold-rule {
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin: 10px 20px 0;
+    border-radius: 2px;
+  }
+
+  .chevron {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--cream-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: background 0.2s;
+  }
+  .chevron svg {
+    width: 14px; height: 14px;
+    stroke: var(--green-mid);
+    transition: transform 0.3s ease;
+  }
+  .section-header.collapsed .chevron svg { transform: rotate(-90deg); }
+  .section-header:hover .chevron { background: var(--gold-light); }
+
+  /* ── Collapsible body ─────────────────────────────────────────────────── */
+  .section-body {
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s ease;
+    max-height: 2000px;
+    opacity: 1;
+  }
+  .section-body.collapsed { max-height: 0; opacity: 0; }
+
+  /* ── Items list ───────────────────────────────────────────────────────── */
+  .items-list {
+    list-style: none;
+    margin: 14px 16px 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(27,67,50,0.07);
+  }
+
+  .item-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 14px;
+    background: var(--white);
+    border-bottom: 1px solid rgba(168,197,181,0.35);
+    transition: background 0.15s;
+  }
+  .item-row:last-child { border-bottom: none; }
+  .item-row:nth-child(even) { background: var(--cream); }
+  .item-row:hover { background: #eef5f0; }
+
+  .item-name {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.4;
+    flex: 1;
+  }
+  .item-name.bold { font-weight: 700; }
+
+  .item-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── Rice table (3 cols) ─────────────────────────────────────────────── */
+  .rice-table {
+    margin: 14px 16px 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(27,67,50,0.07);
+  }
+
+  .rice-header {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
+    background: var(--green-deep);
+    padding: 10px 14px;
+  }
+  .rice-header span {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.3px;
+    font-family: 'Lato', sans-serif;
+  }
+  .rice-header span:not(:first-child) { text-align: center; min-width: 72px; }
+
+  .rice-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--white);
+    border-bottom: 1px solid rgba(168,197,181,0.35);
+    transition: background 0.15s;
+  }
+  .rice-row:last-child { border-bottom: none; }
+  .rice-row:nth-child(even) { background: var(--cream); }
+  .rice-row:hover { background: #eef5f0; }
+
+  .rice-item-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .rice-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    text-align: center;
+    min-width: 72px;
+  }
+
+  /* ── Divider between sections ────────────────────────────────────────── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,151,58,0.25), transparent);
+    margin: 4px 20px;
+  }
+
+  /* ── Footer ──────────────────────────────────────────────────────────── */
+  footer {
+    background: var(--green-deep);
+    color: var(--gold-light);
+    text-align: center;
+    padding: 24px 20px;
+    font-size: 12px;
+    line-height: 1.8;
+    font-style: italic;
+    border-top: 2px solid var(--gold);
+  }
+  footer strong { color: var(--white); font-style: normal; font-size: 14px; }
+
+  /* ── Load animation stagger ──────────────────────────────────────────── */
+  .menu-section:nth-child(1) { transition-delay: 0.05s; }
+  .menu-section:nth-child(2) { transition-delay: 0.15s; }
+  .menu-section:nth-child(3) { transition-delay: 0.25s; }
+  .menu-section:nth-child(4) { transition-delay: 0.35s; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="header-ornament">❖ &nbsp;&nbsp; ❖ &nbsp;&nbsp; ❖</div>
+  <h1>Jui's Kitchen</h1>
+  <p class="phone">Orders &amp; Inquiries: <span>(309) 750-6662</span></p>
+</header>
+
+<!-- Nav pills -->
+<nav class="nav-pills" aria-label="Jump to section">
+  <a class="nav-pill active" href="#rice">Rice &amp; Main</a>
+  <a class="nav-pill" href="#curries">Curries</a>
+  <a class="nav-pill" href="#sides">Bengali Sides</a>
+  <a class="nav-pill" href="#snacks">Snacks &amp; Sweets</a>
+</nav>
+
+<main>
+
+  <!-- Rice & Main Dishes -->
+  <section class="menu-section" id="rice">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="true">
+      <div class="section-title-wrap">
+        <div class="section-title">Rice &amp; Main Dishes</div>
+        <div class="section-subtitle">Trays sized for group servings</div>
+      </div>
+      <div class="chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+    </div>
+    <div class="section-gold-rule"></div>
+    <div class="section-body">
+      <div class="rice-table">
+        <div class="rice-header">
+          <span>Item</span>
+          <span>½ Tray<br>~10 srv</span>
+          <span>Full<br>Tray</span>
+        </div>
+        <div class="rice-row"><span class="rice-item-name">Beef Biriyani</span><span class="rice-price">$70</span><span class="rice-price">$130</span></div>
+        <div class="rice-row"><span class="rice-item-name">Beef Tehari</span><span class="rice-price">$70</span><span class="rice-price">$130</span></div>
+        <div class="rice-row"><span class="rice-item-name">Chicken Biriyani</span><span class="rice-price">$60</span><span class="rice-price">$110</span></div>
+        <div class="rice-row"><span class="rice-item-name">Morog Pulao</span><span class="rice-price">$65</span><span class="rice-price">$120</span></div>
+        <div class="rice-row"><span class="rice-item-name">Polao</span><span class="rice-price">$30</span><span class="rice-price">$60</span></div>
+        <div class="rice-row"><span class="rice-item-name">Khichuri</span><span class="rice-price">$25</span><span class="rice-price">$50</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Curries -->
+  <section class="menu-section" id="curries">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="true">
+      <div class="section-title-wrap">
+        <div class="section-title">Curries</div>
+        <div class="section-subtitle">Freshly prepared with traditional spices</div>
+      </div>
+      <div class="chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+    </div>
+    <div class="section-gold-rule"></div>
+    <div class="section-body">
+      <ul class="items-list">
+        <li class="item-row"><span class="item-name">Duck Curry <small style="color:var(--text-muted)">(1 Whole Duck)</small></span><span class="item-price">$120.00</span></li>
+        <li class="item-row"><span class="item-name">Chicken Curry <small style="color:var(--text-muted)">(1 Whole Chicken)</small></span><span class="item-price">$30.00</span></li>
+        <li class="item-row"><span class="item-name">Pomfret Vuna <small style="color:var(--text-muted)">(1 Whole Fish)</small></span><span class="item-price">$25.00</span></li>
+        <li class="item-row"><span class="item-name">Goat Curry <small style="color:var(--text-muted)">(per lb)</small></span><span class="item-price">$23.00</span></li>
+        <li class="item-row"><span class="item-name">Beef Curry <small style="color:var(--text-muted)">(per lb)</small></span><span class="item-price">$16.00</span></li>
+        <li class="item-row"><span class="item-name">Chicken Roast <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$6.00</span></li>
+        <li class="item-row"><span class="item-name">Eggs Vuna <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$1.50</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Bengali Sides -->
+  <section class="menu-section" id="sides">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="true">
+      <div class="section-title-wrap">
+        <div class="section-title">Bengali Sides</div>
+        <div class="section-subtitle">Traditional accompaniments</div>
+      </div>
+      <div class="chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+    </div>
+    <div class="section-gold-rule"></div>
+    <div class="section-body">
+      <ul class="items-list">
+        <li class="item-row"><span class="item-name">Thick Dal <small style="color:var(--text-muted)">(½ tray · ~10 srv)</small></span><span class="item-price">$40.00</span></li>
+        <li class="item-row"><span class="item-name">Dal – Regular <small style="color:var(--text-muted)">(½ tray · ~10 srv)</small></span><span class="item-price">$20.00</span></li>
+        <li class="item-row"><span class="item-name">Broccoli / Cauliflower + Fish Vorta <small style="color:var(--text-muted)">(~5 srv)</small></span><span class="item-price">$20.00</span></li>
+        <li class="item-row"><span class="item-name">Mixed Vegetable <small style="color:var(--text-muted)">(~5 srv)</small></span><span class="item-price">$15.00</span></li>
+        <li class="item-row"><span class="item-name">Alu Vorta <small style="color:var(--text-muted)">(~5 srv)</small></span><span class="item-price">$15.00</span></li>
+        <li class="item-row"><span class="item-name">Begun Vorta <small style="color:var(--text-muted)">(~5 srv)</small></span><span class="item-price">$15.00</span></li>
+        <li class="item-row"><span class="item-name">Dal Vorta <small style="color:var(--text-muted)">(~5 srv)</small></span><span class="item-price">$15.00</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Snacks & Sweets -->
+  <section class="menu-section" id="snacks">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="true">
+      <div class="section-title-wrap">
+        <div class="section-title">Snacks &amp; Sweets</div>
+      </div>
+      <div class="chevron">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+    </div>
+    <div class="section-gold-rule"></div>
+    <div class="section-body">
+      <ul class="items-list">
+        <li class="item-row"><span class="item-name">Chicken Chop <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$3.00</span></li>
+        <li class="item-row"><span class="item-name">Egg Chop <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$2.00</span></li>
+        <li class="item-row"><span class="item-name">Singara <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$2.00</span></li>
+        <li class="item-row"><span class="item-name">Samosa <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$2.00</span></li>
+        <li class="item-row"><span class="item-name">Alu Chop <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$1.50</span></li>
+        <li class="item-row"><span class="item-name">Beguni <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$1.00</span></li>
+        <li class="item-row"><span class="item-name">Piyazu <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$1.00</span></li>
+        <li class="item-row"><span class="item-name">Halim <small style="color:var(--text-muted)">(½ tray · ~10 srv)</small></span><span class="item-price">$70.00</span></li>
+        <li class="item-row"><span class="item-name">Nawabi Semai <small style="color:var(--text-muted)">(half / full)</small></span><span class="item-price">$30 / $60</span></li>
+        <li class="item-row"><span class="item-name">Firni <small style="color:var(--text-muted)">(½ tray · ~10 srv)</small></span><span class="item-price">$30.00</span></li>
+        <li class="item-row"><span class="item-name">Dudh Lau <small style="color:var(--text-muted)">(½ tray · ~10 srv)</small></span><span class="item-price">$30.00</span></li>
+        <li class="item-row"><span class="item-name">Pudding – Full Size <small style="color:var(--text-muted)">(8 pcs)</small></span><span class="item-price">$25.00</span></li>
+        <li class="item-row"><span class="item-name">Patishapta Pitha <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$2.00</span></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <strong>Jui's Kitchen</strong><br>
+  All items freshly prepared to order &nbsp;·&nbsp; Prices subject to change<br>
+  Custom menus available — call <strong>(309) 750-6662</strong> for details
+</footer>
+
+<script>
+  // Toggle section open/close
+  function toggleSection(header) {
+    const body = header.nextElementSibling.nextElementSibling;
+    const isCollapsed = body.classList.contains('collapsed');
+    body.classList.toggle('collapsed');
+    header.classList.toggle('collapsed');
+    header.setAttribute('aria-expanded', isCollapsed ? 'true' : 'false');
+  }
+
+  // Intersection observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.menu-section').forEach(s => observer.observe(s));
+
+  // Highlight active nav pill on scroll
+  const sections = document.querySelectorAll('.menu-section[id]');
+  const pills = document.querySelectorAll('.nav-pill');
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        pills.forEach(p => p.classList.remove('active'));
+        const match = document.querySelector(`.nav-pill[href="#${e.target.id}"]`);
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(s => navObserver.observe(s));
+</script>
+</body>
+</html>
