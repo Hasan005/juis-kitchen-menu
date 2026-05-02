@@ -5,484 +5,436 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Jui's Kitchen — Menu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --green-deep:  #1b4332;
-    --green-mid:   #2d6a4f;
-    --green-light: #52a475;
-    --gold:        #8a5e0a;
-    --gold-light:  #f0d080;
-    --cream:       #fdf6e3;
-    --cream-dark:  #f4ead0;
-    --text:        #1c1c1c;
-    --text-muted:  #5a6a5e;
-    --white:       #ffffff;
-  }
+:root {
+  --forest:    #1b4332;
+  --forest-mid:#2d6a4f;
+  --gold:      #8a5e0a;
+  --gold-lt:   #c9973a;
+  --gold-pale: #f0d080;
+  --cream:     #fdf8f0;
+  --parchment: #f5ead4;
+  --ink:       #1a1a18;
+  --ink-muted: #5c6355;
+  --white:     #ffffff;
+  --rule:      rgba(138,94,10,0.2);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* HEADER */
+.site-header{background:var(--forest);text-align:center;padding:36px 24px 28px;border-bottom:2px solid var(--gold);position:relative;overflow:hidden;}
+.site-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,151,58,0.12) 0%,transparent 70%);pointer-events:none;}
+.header-ornament{font-family:'Cormorant Garamond',serif;color:var(--gold-pale);font-size:13px;letter-spacing:8px;opacity:0.7;margin-bottom:8px;}
+.site-header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,9vw,4rem);font-weight:600;color:var(--white);line-height:1;}
+.header-tagline{margin-top:8px;font-size:11px;font-weight:300;color:var(--gold-pale);letter-spacing:3px;text-transform:uppercase;opacity:0.8;}
+.header-phone{margin-top:12px;font-size:13px;color:rgba(255,255,255,0.65);}
+.header-phone strong{color:var(--white);font-weight:500;font-size:15px;}
 
-  html { scroll-behavior: smooth; }
+/* MOBILE NAV 2x2 */
+.mobile-nav{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--forest);border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:100;}
+.mobile-nav-btn{background:var(--forest);border:none;padding:12px 8px;color:rgba(240,208,128,0.75);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.5px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:background 0.2s,color 0.2s;text-decoration:none;border-right:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);}
+.mobile-nav-btn:nth-child(2n){border-right:none;}
+.mobile-nav-btn:nth-child(3),.mobile-nav-btn:nth-child(4){border-bottom:none;}
+.mobile-nav-btn .btn-icon{font-size:18px;line-height:1;}
+.mobile-nav-btn.active,.mobile-nav-btn:hover{background:rgba(201,151,58,0.18);color:var(--gold-pale);}
 
-  body {
-    font-family: 'Lato', sans-serif;
-    background: var(--cream);
-    color: var(--text);
-    min-height: 100vh;
-  }
+/* MOBILE SECTIONS */
+.mobile-main{padding:0 0 60px;}
+.mobile-section{opacity:0;transform:translateY(14px);transition:opacity 0.45s ease,transform 0.45s ease;}
+.mobile-section.visible{opacity:1;transform:none;}
+.mobile-section:nth-child(1){transition-delay:0.05s;}
+.mobile-section:nth-child(2){transition-delay:0.12s;}
+.mobile-section:nth-child(3){transition-delay:0.19s;}
+.mobile-section:nth-child(4){transition-delay:0.26s;}
+.mobile-section-header{padding:28px 20px 0;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.mobile-section-icon{font-size:1.4rem;flex-shrink:0;}
+.mobile-section-title-wrap{flex:1;}
+/* Section category label — ALL CAPS gold above title */
+.section-label{
+  font-family:'DM Sans',sans-serif;
+  font-size:10px;font-weight:500;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--gold-lt);
+  margin-bottom:3px;display:block;
+}
+.mobile-section-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--forest);line-height:1.1;}
+.mobile-section-subtitle{font-size:11px;color:var(--ink-muted);font-style:italic;margin-top:2px;}
+.mobile-chevron{width:26px;height:26px;border-radius:50%;background:var(--parchment);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mobile-chevron svg{width:12px;height:12px;stroke:var(--forest-mid);transition:transform 0.3s;}
+.mobile-section-header.collapsed .mobile-chevron svg{transform:rotate(-90deg);}
+.mobile-gold-rule{height:1px;background:linear-gradient(to right,var(--gold-lt),transparent);margin:10px 20px 0;}
+.mobile-section-body{overflow:hidden;transition:max-height 0.35s ease,opacity 0.3s ease;max-height:2000px;opacity:1;}
+.mobile-section-body.collapsed{max-height:0;opacity:0;}
+.mobile-divider{height:1px;background:var(--rule);margin:6px 20px;}
 
-  /* ── Header ─────────────────────────────────────────────────────────── */
-  .site-header {
-    background: var(--green-deep);
-    padding: 28px 20px 20px;
-    text-align: center;
-    position: relative;
-    border-bottom: 3px solid var(--gold);
-  }
+/* MOBILE ITEMS — editorial style, no boxes */
+.m-item-list{list-style:none;margin:14px 20px 18px;}
+.m-item{
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:12px;padding:11px 0 11px 12px;
+  border-bottom:1px solid var(--rule);
+  border-left:3px solid transparent;
+  transition:border-left-color 0.2s,background 0.2s;
+}
+.m-item:last-child{border-bottom:none;}
+.m-item:hover{border-left-color:var(--gold-lt);background:rgba(201,151,58,0.04);}
+.m-item-name{font-size:15px;color:var(--ink);line-height:1.3;flex:1;}
+.m-item-name small{color:var(--ink-muted);font-size:12px;}
+/* dot leader between name and price */
+.m-item-name-wrap{flex:1;display:flex;align-items:baseline;gap:0;overflow:hidden;}
+.m-item-dots{flex:1;border-bottom:1.5px dotted rgba(138,94,10,0.25);margin:0 8px 3px;min-width:16px;}
+.m-item-price{font-size:15px;font-weight:500;color:var(--gold);white-space:nowrap;flex-shrink:0;}
 
-  .header-ornament {
-    color: var(--gold);
-    font-size: 14px;
-    letter-spacing: 6px;
-    margin-bottom: 6px;
-    opacity: 0.8;
-  }
+/* MOBILE RICE */
+.m-rice-wrap{margin:12px 16px 4px;border-radius:8px;overflow:hidden;}
+.m-rice-head{display:grid;grid-template-columns:1fr 80px 80px;background:var(--forest);padding:8px 14px;}
+.m-rice-head span{font-size:11px;font-weight:500;color:var(--white);text-align:center;}
+.m-rice-head span:first-child{text-align:left;}
+.m-rice-row{display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;align-items:center;border-bottom:1px solid rgba(168,197,181,0.3);transition:background 0.15s;}
+.m-rice-row:nth-child(odd){background:var(--white);}
+.m-rice-row:nth-child(even){background:var(--parchment);}
+.m-rice-row:last-child{border-bottom:none;}
+.m-rice-name{font-size:15px;font-weight:500;color:var(--ink);}
+.m-rice-price{font-size:14px;font-weight:500;color:var(--gold);text-align:center;}
+.m-footnote{font-size:12px;color:var(--ink-muted);font-style:italic;margin:4px 16px 16px;padding:0 2px;}
 
-  .site-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 8vw, 3rem);
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1.1;
-    letter-spacing: 0.5px;
-  }
+/* DESKTOP */
+.desktop-wrap{display:none;}
+@media(min-width:768px){
+  .mobile-nav,.mobile-main{display:none;}
+  .desktop-wrap{display:block;}
+  .site-header{padding:52px 40px 40px;}
+  .site-header h1{font-size:4.8rem;}
 
-  .site-header .phone {
-    margin-top: 10px;
-    font-size: 13px;
-    color: var(--gold-light);
-    letter-spacing: 0.5px;
-  }
+  .desktop-topbar{background:var(--forest);border-bottom:1px solid rgba(201,151,58,0.3);position:sticky;top:0;z-index:100;display:flex;justify-content:center;gap:8px;padding:11px 24px;}
+  .desktop-pill{padding:6px 22px;border-radius:20px;border:1px solid rgba(201,151,58,0.4);color:var(--gold-pale);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background 0.2s,color 0.2s;display:flex;align-items:center;gap:6px;}
+  .desktop-pill:hover,.desktop-pill.active{background:var(--gold);color:var(--white);border-color:var(--gold);}
 
-  .site-header .phone span {
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--white);
-  }
+  .magazine{max-width:1080px;margin:0 auto;padding:56px 52px 88px;}
 
-  /* ── Section nav pills ───────────────────────────────────────────────── */
-  .nav-pills {
-    display: flex;
-    gap: 8px;
-    padding: 14px 16px;
-    overflow-x: auto;
-    background: var(--green-deep);
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 1px solid rgba(201,151,58,0.3);
-  }
-  .nav-pills::-webkit-scrollbar { display: none; }
+  .mag-section-label{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-lt);margin-bottom:4px;display:block;}
+  .mag-section-head{display:flex;flex-direction:column;align-items:flex-start;margin-bottom:6px;}
+  .mag-section-title{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:600;color:var(--forest);line-height:1;}
+  .mag-section-subtitle{font-size:13px;color:var(--ink-muted);font-style:italic;margin-top:4px;}
+  .mag-rule{height:1px;background:linear-gradient(to right,var(--gold-lt),transparent);margin-bottom:22px;}
+  .mag-block{margin-bottom:56px;}
 
-  .nav-pill {
-    flex-shrink: 0;
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid rgba(201,151,58,0.5);
-    color: var(--gold-light);
-    font-size: 12px;
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-    white-space: nowrap;
-  }
-  .nav-pill:hover, .nav-pill.active {
-    background: var(--gold);
-    color: var(--green-deep);
-    border-color: var(--gold);
-  }
+  .mag-rice-table{width:100%;border-collapse:collapse;}
+  .mag-rice-table thead tr{background:var(--forest);}
+  .mag-rice-table thead th{padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--white);letter-spacing:0.5px;text-align:left;}
+  .mag-rice-table thead th:not(:first-child){text-align:center;width:160px;}
+  .mag-rice-table tbody tr{border-bottom:1px solid var(--rule);transition:background 0.15s;}
+  .mag-rice-table tbody tr:nth-child(even){background:rgba(245,234,212,0.35);}
+  .mag-rice-table tbody tr:hover{background:#e8f0eb;}
+  .mag-rice-table tbody td{padding:12px 20px;font-size:15px;}
+  .mag-rice-table tbody td:first-child{font-weight:500;}
+  .mag-rice-table tbody td:not(:first-child){text-align:center;color:var(--gold);font-weight:500;}
+  .mag-footnote{font-size:12px;color:var(--ink-muted);font-style:italic;margin-top:10px;}
 
-  /* ── Main content ─────────────────────────────────────────────────────── */
-  main { padding: 0 0 60px; }
+  .mag-two-col{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-bottom:56px;align-items:start;}
 
-  /* ── Section ─────────────────────────────────────────────────────────── */
-  .menu-section {
-    margin: 0;
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .menu-section.visible { opacity: 1; transform: none; }
+  .mag-col-label{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-lt);margin-bottom:3px;display:block;}
+  .mag-col-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--forest);margin-bottom:3px;display:flex;align-items:center;gap:10px;}
+  .mag-col-subtitle{font-size:12px;color:var(--ink-muted);font-style:italic;margin-bottom:8px;}
+  .mag-col-rule{height:1px;background:linear-gradient(to right,var(--gold-lt),transparent);margin-bottom:2px;}
 
-  .section-header {
-    padding: 22px 20px 0;
-    cursor: pointer;
-    user-select: none;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-  }
+  /* dot leader for desktop items */
+  .mag-item{display:flex;align-items:baseline;gap:0;padding:10px 0;border-bottom:1px solid var(--rule);}
+  .mag-item:last-child{border-bottom:none;}
+  .mag-item-name{font-size:15px;color:var(--ink);white-space:nowrap;flex-shrink:0;}
+  .mag-item-name small{color:var(--ink-muted);font-size:12px;}
+  .mag-item-dots{flex:1;border-bottom:1.5px dotted rgba(138,94,10,0.25);margin:0 10px 3px;min-width:20px;}
+  .mag-item-price{font-size:15px;font-weight:500;color:var(--gold);white-space:nowrap;flex-shrink:0;}
 
-  .section-title-wrap { flex: 1; }
+  .mag-items-two-col{display:grid;grid-template-columns:1fr 1fr;gap:0 72px;}
+}
 
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.35rem;
-    font-weight: 600;
-    color: var(--green-deep);
-    line-height: 1.2;
-  }
-
-  .section-subtitle {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-style: italic;
-    margin-top: 3px;
-  }
-
-  .section-gold-rule {
-    height: 2px;
-    background: linear-gradient(to right, var(--gold), transparent);
-    margin: 10px 20px 0;
-    border-radius: 2px;
-  }
-
-  .chevron {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--cream-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 2px;
-    transition: background 0.2s;
-  }
-  .chevron svg {
-    width: 14px; height: 14px;
-    stroke: var(--green-mid);
-    transition: transform 0.3s ease;
-  }
-  .section-header.collapsed .chevron svg { transform: rotate(-90deg); }
-  .section-header:hover .chevron { background: var(--gold-light); }
-
-  /* ── Collapsible body ─────────────────────────────────────────────────── */
-  .section-body {
-    overflow: hidden;
-    transition: max-height 0.35s ease, opacity 0.3s ease;
-    max-height: 2000px;
-    opacity: 1;
-  }
-  .section-body.collapsed { max-height: 0; opacity: 0; }
-
-  /* ── Items list ───────────────────────────────────────────────────────── */
-  .items-list {
-    list-style: none;
-    margin: 14px 16px 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 1px 6px rgba(27,67,50,0.07);
-  }
-
-  .item-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 11px 14px;
-    background: var(--white);
-    border-bottom: 1px solid rgba(168,197,181,0.35);
-    transition: background 0.15s;
-  }
-  .item-row:last-child { border-bottom: none; }
-  .item-row:nth-child(even) { background: var(--cream); }
-  .item-row:hover { background: #eef5f0; }
-
-  .item-name {
-    font-size: 16px;
-    color: var(--text);
-    line-height: 1.4;
-    flex: 1;
-  }
-  .item-name.bold { font-weight: 700; }
-
-  .item-price {
-    font-family: 'Lato', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--gold);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  /* ── Rice table (3 cols) ─────────────────────────────────────────────── */
-  .rice-table {
-    margin: 14px 16px 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 1px 6px rgba(27,67,50,0.07);
-  }
-
-  .rice-header {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    gap: 8px;
-    background: var(--green-deep);
-    padding: 10px 14px;
-  }
-  .rice-header span {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--white);
-    letter-spacing: 0.3px;
-    font-family: 'Lato', sans-serif;
-  }
-  .rice-header span:not(:first-child) { text-align: center; min-width: 72px; }
-
-  .rice-row {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    gap: 8px;
-    align-items: center;
-    padding: 10px 14px;
-    background: var(--white);
-    border-bottom: 1px solid rgba(168,197,181,0.35);
-    transition: background 0.15s;
-  }
-  .rice-row:last-child { border-bottom: none; }
-  .rice-row:nth-child(even) { background: var(--cream); }
-  .rice-row:hover { background: #eef5f0; }
-
-  .rice-item-name {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.3;
-  }
-  .rice-price {
-    font-family: 'Lato', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--gold);
-    text-align: center;
-    min-width: 72px;
-  }
-
-  /* ── Divider between sections ────────────────────────────────────────── */
-  .section-divider {
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(201,151,58,0.25), transparent);
-    margin: 4px 20px;
-  }
-
-  /* ── Footer ──────────────────────────────────────────────────────────── */
-  footer {
-    background: var(--green-deep);
-    color: var(--gold-light);
-    text-align: center;
-    padding: 24px 20px;
-    font-size: 12px;
-    line-height: 1.8;
-    font-style: italic;
-    border-top: 2px solid var(--gold);
-  }
-  footer strong { color: var(--white); font-style: normal; font-size: 14px; }
-
-  /* ── Load animation stagger ──────────────────────────────────────────── */
-  .menu-section:nth-child(1) { transition-delay: 0.05s; }
-  .menu-section:nth-child(2) { transition-delay: 0.15s; }
-  .menu-section:nth-child(3) { transition-delay: 0.25s; }
-  .menu-section:nth-child(4) { transition-delay: 0.35s; }
+/* FOOTER */
+.site-footer{background:var(--forest);border-top:2px solid var(--gold);color:var(--white);}
+.footer-body{display:flex;flex-direction:column;align-items:center;gap:24px;padding:32px 24px 24px;text-align:center;}
+@media(min-width:768px){.footer-body{flex-direction:row;justify-content:center;gap:64px;text-align:left;padding:40px 52px 32px;}}
+.footer-col{display:flex;flex-direction:column;gap:4px;}
+.footer-label{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gold-pale);opacity:0.7;}
+.footer-value{font-size:16px;font-weight:500;}
+.footer-sub{font-size:12px;color:rgba(255,255,255,0.5);font-style:italic;}
+.footer-vr{display:none;width:1px;height:50px;background:rgba(255,255,255,0.12);align-self:center;}
+@media(min-width:768px){.footer-vr{display:block;}}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);text-align:center;padding:12px;font-size:11px;color:rgba(255,255,255,0.3);font-style:italic;}
 </style>
 </head>
 <body>
 
-<!-- Header -->
 <header class="site-header">
-  <div class="header-ornament">❖ &nbsp;&nbsp; ❖ &nbsp;&nbsp; ❖</div>
-  <h1>Jui's Kitchen</h1>
-  <p class="phone">Orders &amp; Inquiries: <span>(309) 750-6662</span></p>
+  <div class="header-ornament">&#10022; &nbsp; &#10022; &nbsp; &#10022;</div>
+  <h1>Jui&#8217;s Kitchen</h1>
+  <div class="header-tagline">Authentic Bengali Catering</div>
+  <p class="header-phone">Orders &amp; Inquiries: <strong>(309) 750-6662</strong></p>
 </header>
 
-<!-- Nav pills -->
-<nav class="nav-pills" aria-label="Jump to section">
-  <a class="nav-pill active" href="#rice">Rice &amp; Main</a>
-  <a class="nav-pill" href="#curries">Curries</a>
-  <a class="nav-pill" href="#sides">Bengali Sides</a>
-  <a class="nav-pill" href="#snacks">Snacks &amp; Sweets</a>
+<!-- MOBILE NAV -->
+<nav class="mobile-nav">
+  <a class="mobile-nav-btn active" href="#m-rice"><span class="btn-icon">&#127834;</span>Rice &amp; Main</a>
+  <a class="mobile-nav-btn" href="#m-curries"><span class="btn-icon">&#127835;</span>Curries</a>
+  <a class="mobile-nav-btn" href="#m-sides"><span class="btn-icon">&#129367;</span>Bengali Sides</a>
+  <a class="mobile-nav-btn" href="#m-snacks"><span class="btn-icon">&#127841;</span>Snacks &amp; Sweets</a>
 </nav>
 
-<main>
+<!-- MOBILE MAIN -->
+<main class="mobile-main">
 
-  <!-- Rice & Main Dishes -->
-  <section class="menu-section" id="rice">
-    <div class="section-header" onclick="toggleSection(this)" aria-expanded="true">
-      <div class="section-title-wrap">
-        <div class="section-title">Rice &amp; Main Dishes</div>
-        <div class="section-subtitle">Trays sized for group servings</div>
-      </div>
-      <div class="chevron">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </div>
-    </div>
-    <div class="section-gold-rule"></div>
-    <div class="section-body">
-      <div class="rice-table">
-        <div class="rice-header">
-          <span>Item</span>
-          <span>½ Tray<br>~10 srv</span>
-          <span>Full<br>Tray</span>
+  <section class="mobile-section" id="m-rice">
+    <div class="mobile-section-header" onclick="toggleMobile(this)">
+      <span class="mobile-section-icon">&#127834;</span>
+        <div class="mobile-section-title-wrap">
+          <span class="section-label">Main Course</span>
+          <div class="mobile-section-title">Rice &amp; Main Dishes</div>
+          <div class="mobile-section-subtitle">Trays sized for group servings</div>
         </div>
-        <div class="rice-row"><span class="rice-item-name">Beef Biriyani</span><span class="rice-price">$70</span><span class="rice-price">$140</span></div>
-        <div class="rice-row"><span class="rice-item-name">Beef Tehari</span><span class="rice-price">$70</span><span class="rice-price">$140</span></div>
-        <div class="rice-row"><span class="rice-item-name">Chicken Biriyani</span><span class="rice-price">$60</span><span class="rice-price">$110</span></div>
-        <div class="rice-row"><span class="rice-item-name">* Morog Polao</span><span class="rice-price">$65</span><span class="rice-price">$120</span></div>
-        <div class="rice-row"><span class="rice-item-name">Polao</span><span class="rice-price">$30</span><span class="rice-price">$60</span></div>
-        <div class="rice-row"><span class="rice-item-name">Khichuri</span><span class="rice-price">$30</span><span class="rice-price">$60</span></div>
+      <div class="mobile-chevron"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="mobile-gold-rule"></div>
+    <div class="mobile-section-body">
+      <div class="m-rice-wrap">
+        <div class="m-rice-head"><span>Item</span><span>&#189; Tray<br>~10 srv</span><span>Full Tray</span></div>
+        <div class="m-rice-row"><span class="m-rice-name">Beef Biriyani</span><span class="m-rice-price">$70</span><span class="m-rice-price">$140</span></div>
+        <div class="m-rice-row"><span class="m-rice-name">Beef Tehari</span><span class="m-rice-price">$70</span><span class="m-rice-price">$140</span></div>
+        <div class="m-rice-row"><span class="m-rice-name">Chicken Biriyani</span><span class="m-rice-price">$60</span><span class="m-rice-price">$110</span></div>
+        <div class="m-rice-row"><span class="m-rice-name">* Morog Polao</span><span class="m-rice-price">$65</span><span class="m-rice-price">$120</span></div>
+        <div class="m-rice-row"><span class="m-rice-name">Polao</span><span class="m-rice-price">$30</span><span class="m-rice-price">$60</span></div>
+        <div class="m-rice-row"><span class="m-rice-name">Khichuri</span><span class="m-rice-price">$30</span><span class="m-rice-price">$60</span></div>
       </div>
-      <p style="margin: -4px 16px 18px; font-size: 13px; color: var(--text-muted); font-style: italic;">* Full tray Morog Polao includes 12 leg quarters.</p>
+      <p class="m-footnote">* Full tray Morog Polao includes 12 leg quarters.</p>
     </div>
   </section>
 
-  <div class="section-divider"></div>
+  <div class="mobile-divider"></div>
 
-  <!-- Curries -->
-  <section class="menu-section" id="curries">
-    <div class="section-header" onclick="toggleSection(this)" aria-expanded="true">
-      <div class="section-title-wrap">
-        <div class="section-title">Curries</div>
-        <div class="section-subtitle">Freshly prepared with traditional spices</div>
-      </div>
-      <div class="chevron">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </div>
+  <section class="mobile-section" id="m-curries">
+    <div class="mobile-section-header" onclick="toggleMobile(this)">
+      <span class="mobile-section-icon">&#127835;</span>
+        <div class="mobile-section-title-wrap">
+          <span class="section-label">Slow Cooked</span>
+          <div class="mobile-section-title">Curries</div>
+          <div class="mobile-section-subtitle">Freshly prepared with traditional spices</div>
+        </div>
+      <div class="mobile-chevron"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
-    <div class="section-gold-rule"></div>
-    <div class="section-body">
-      <ul class="items-list">
-        <li class="item-row"><span class="item-name">Beef Curry <small style="color:var(--text-muted)">(per lb)</small></span><span class="item-price">$16</span></li>
-        <li class="item-row"><span class="item-name">Goat Curry <small style="color:var(--text-muted)">(per lb)</small></span><span class="item-price">$23</span></li>
-        <li class="item-row"><span class="item-name">Duck Curry <small style="color:var(--text-muted)">(1 Whole Duck)</small></span><span class="item-price">$80</span></li>
-        <li class="item-row"><span class="item-name">Chicken Curry <small style="color:var(--text-muted)">(1 Whole Chicken)</small></span><span class="item-price">$30</span></li>
-        <li class="item-row"><span class="item-name">Chicken Roast <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$6</span></li>
-        <li class="item-row"><span class="item-name">Pomfret Bhuna <small style="color:var(--text-muted)">(1 Whole Fish)</small></span><span class="item-price">$25</span></li>
+    <div class="mobile-gold-rule"></div>
+    <div class="mobile-section-body">
+      <ul class="m-item-list">
+        <li class="m-item"><span class="m-item-name">Beef Curry <small>(per lb)</small></span><span class="m-item-dots"></span><span class="m-item-price">$16</span></li>
+        <li class="m-item"><span class="m-item-name">Goat Curry <small>(per lb)</small></span><span class="m-item-dots"></span><span class="m-item-price">$23</span></li>
+        <li class="m-item"><span class="m-item-name">Duck Curry <small>(1 Whole Duck)</small></span><span class="m-item-dots"></span><span class="m-item-price">$80</span></li>
+        <li class="m-item"><span class="m-item-name">Chicken Curry <small>(1 Whole Chicken)</small></span><span class="m-item-dots"></span><span class="m-item-price">$30</span></li>
+        <li class="m-item"><span class="m-item-name">Chicken Roast <small>(per piece)</small></span><span class="m-item-dots"></span><span class="m-item-price">$6</span></li>
+        <li class="m-item"><span class="m-item-name">Pomfret Bhuna <small>(1 Whole Fish)</small></span><span class="m-item-dots"></span><span class="m-item-price">$25</span></li>
       </ul>
     </div>
   </section>
 
-  <div class="section-divider"></div>
+  <div class="mobile-divider"></div>
 
-  <!-- Bengali Sides -->
-  <section class="menu-section" id="sides">
-    <div class="section-header" onclick="toggleSection(this)" aria-expanded="true">
-      <div class="section-title-wrap">
-        <div class="section-title">Bengali Sides</div>
-        <div class="section-subtitle">Traditional accompaniments</div>
-      </div>
-      <div class="chevron">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </div>
+  <section class="mobile-section" id="m-sides">
+    <div class="mobile-section-header" onclick="toggleMobile(this)">
+      <span class="mobile-section-icon">&#129367;</span>
+        <div class="mobile-section-title-wrap">
+          <span class="section-label">Accompaniments</span>
+          <div class="mobile-section-title">Bengali Sides</div>
+          <div class="mobile-section-subtitle">Traditional accompaniments</div>
+        </div>
+      <div class="mobile-chevron"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
-    <div class="section-gold-rule"></div>
-    <div class="section-body">
-      <ul class="items-list">
-        <li class="item-row"><span class="item-name">Thick Dal <small style="color:var(--text-muted)">(½ tray · ~10 srv)</small></span><span class="item-price">$40</span></li>
-        <li class="item-row"><span class="item-name">Dal – Regular <small style="color:var(--text-muted)">(½ tray · ~10 srv)</small></span><span class="item-price">$20</span></li>
-        <li class="item-row"><span class="item-name">Broccoli / Cauliflower + Fish Vorta <small style="color:var(--text-muted)">(~5 srv)</small></span><span class="item-price">$20</span></li>
-        <li class="item-row"><span class="item-name">Mixed Vegetable <small style="color:var(--text-muted)">(~5 srv)</small></span><span class="item-price">$15</span></li>
-        <li class="item-row"><span class="item-name">Alu Vorta <small style="color:var(--text-muted)">(~5 srv)</small></span><span class="item-price">$10</span></li>
-        <li class="item-row"><span class="item-name">Begun Vorta <small style="color:var(--text-muted)">(~5 srv)</small></span><span class="item-price">$15</span></li>
-        <li class="item-row"><span class="item-name">Dal Vorta <small style="color:var(--text-muted)">(~5 srv)</small></span><span class="item-price">$15</span></li>
-        <li class="item-row"><span class="item-name">Eggs Bhuna <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$1.50</span></li>
+    <div class="mobile-gold-rule"></div>
+    <div class="mobile-section-body">
+      <ul class="m-item-list">
+        <li class="m-item"><span class="m-item-name">Thick Dal <small>(&#189; tray &middot; ~10 srv)</small></span><span class="m-item-dots"></span><span class="m-item-price">$40</span></li>
+        <li class="m-item"><span class="m-item-name">Dal &ndash; Regular <small>(&#189; tray &middot; ~10 srv)</small></span><span class="m-item-dots"></span><span class="m-item-price">$20</span></li>
+        <li class="m-item"><span class="m-item-name">Broccoli / Cauliflower + Fish Vorta <small>(~5 srv)</small></span><span class="m-item-dots"></span><span class="m-item-price">$20</span></li>
+        <li class="m-item"><span class="m-item-name">Mixed Vegetable <small>(~5 srv)</small></span><span class="m-item-dots"></span><span class="m-item-price">$15</span></li>
+        <li class="m-item"><span class="m-item-name">Alu Vorta <small>(~5 srv)</small></span><span class="m-item-dots"></span><span class="m-item-price">$10</span></li>
+        <li class="m-item"><span class="m-item-name">Begun Vorta <small>(~5 srv)</small></span><span class="m-item-dots"></span><span class="m-item-price">$15</span></li>
+        <li class="m-item"><span class="m-item-name">Dal Vorta <small>(~5 srv)</small></span><span class="m-item-dots"></span><span class="m-item-price">$15</span></li>
+        <li class="m-item"><span class="m-item-name">Eggs Bhuna <small>(per piece)</small></span><span class="m-item-dots"></span><span class="m-item-price">$1.50</span></li>
       </ul>
     </div>
   </section>
 
-  <div class="section-divider"></div>
+  <div class="mobile-divider"></div>
 
-  <!-- Snacks & Sweets -->
-  <section class="menu-section" id="snacks">
-    <div class="section-header" onclick="toggleSection(this)" aria-expanded="true">
-      <div class="section-title-wrap">
-        <div class="section-title">Snacks &amp; Sweets</div>
-      </div>
-      <div class="chevron">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </div>
+  <section class="mobile-section" id="m-snacks">
+    <div class="mobile-section-header" onclick="toggleMobile(this)">
+      <span class="mobile-section-icon">&#127841;</span>
+        <div class="mobile-section-title-wrap">
+          <span class="section-label">Bites &amp; Desserts</span>
+          <div class="mobile-section-title">Snacks &amp; Sweets</div>
+        </div>
+      <div class="mobile-chevron"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
-    <div class="section-gold-rule"></div>
-    <div class="section-body">
-      <ul class="items-list">
-        <li class="item-row"><span class="item-name">Chicken Chop <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$3</span></li>
-        <li class="item-row"><span class="item-name">Egg Chop <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$2</span></li>
-        <li class="item-row"><span class="item-name">Singara <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$2</span></li>
-        <li class="item-row"><span class="item-name">Samosa <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$2</span></li>
-        <li class="item-row"><span class="item-name">Alu Chop <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$1.50</span></li>
-        <li class="item-row"><span class="item-name">Beguni <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$1</span></li>
-        <li class="item-row"><span class="item-name">Piyazu <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$1</span></li>
-        <li class="item-row"><span class="item-name">Halim <small style="color:var(--text-muted)">(½ tray · ~10 srv)</small></span><span class="item-price">$70</span></li>
-        <li class="item-row"><span class="item-name">Nawabi Semai <small style="color:var(--text-muted)">(½ tray)</small></span><span class="item-price">$50</span></li>
-        <li class="item-row"><span class="item-name">Firni <small style="color:var(--text-muted)">(½ tray · ~10 srv)</small></span><span class="item-price">$30</span></li>
-        <li class="item-row"><span class="item-name">Dudh Lau <small style="color:var(--text-muted)">(½ tray · ~10 srv)</small></span><span class="item-price">$30</span></li>
-        <li class="item-row"><span class="item-name">Pudding – Full Size <small style="color:var(--text-muted)">(8 pcs)</small></span><span class="item-price">$25</span></li>
-        <li class="item-row"><span class="item-name">Patishapta Pitha <small style="color:var(--text-muted)">(per piece)</small></span><span class="item-price">$2</span></li>
+    <div class="mobile-gold-rule"></div>
+    <div class="mobile-section-body">
+      <ul class="m-item-list">
+        <li class="m-item"><span class="m-item-name">Chicken Chop <small>(per piece)</small></span><span class="m-item-dots"></span><span class="m-item-price">$3</span></li>
+        <li class="m-item"><span class="m-item-name">Egg Chop <small>(per piece)</small></span><span class="m-item-dots"></span><span class="m-item-price">$2</span></li>
+        <li class="m-item"><span class="m-item-name">Singara <small>(per piece)</small></span><span class="m-item-dots"></span><span class="m-item-price">$2</span></li>
+        <li class="m-item"><span class="m-item-name">Samosa <small>(per piece)</small></span><span class="m-item-dots"></span><span class="m-item-price">$2</span></li>
+        <li class="m-item"><span class="m-item-name">Alu Chop <small>(per piece)</small></span><span class="m-item-dots"></span><span class="m-item-price">$1.50</span></li>
+        <li class="m-item"><span class="m-item-name">Beguni <small>(per piece)</small></span><span class="m-item-dots"></span><span class="m-item-price">$1</span></li>
+        <li class="m-item"><span class="m-item-name">Piyazu <small>(per piece)</small></span><span class="m-item-dots"></span><span class="m-item-price">$1</span></li>
+        <li class="m-item"><span class="m-item-name">Halim <small>(&#189; tray &middot; ~10 srv)</small></span><span class="m-item-dots"></span><span class="m-item-price">$70</span></li>
+        <li class="m-item"><span class="m-item-name">Nawabi Semai <small>(&#189; tray)</small></span><span class="m-item-dots"></span><span class="m-item-price">$50</span></li>
+        <li class="m-item"><span class="m-item-name">Firni <small>(&#189; tray &middot; ~10 srv)</small></span><span class="m-item-dots"></span><span class="m-item-price">$30</span></li>
+        <li class="m-item"><span class="m-item-name">Dudh Lau <small>(&#189; tray &middot; ~10 srv)</small></span><span class="m-item-dots"></span><span class="m-item-price">$30</span></li>
+        <li class="m-item"><span class="m-item-name">Pudding &ndash; Full Size <small>(8 pcs)</small></span><span class="m-item-dots"></span><span class="m-item-price">$25</span></li>
+        <li class="m-item"><span class="m-item-name">Patishapta Pitha <small>(per piece)</small></span><span class="m-item-dots"></span><span class="m-item-price">$2</span></li>
       </ul>
     </div>
   </section>
 
 </main>
 
-<footer>
-  <strong>Jui's Kitchen</strong><br>
-  All items freshly prepared to order <br>
-  Custom menus available — call <strong>(309) 750-6662</strong> for details
+<!-- DESKTOP -->
+<div class="desktop-wrap">
+  <nav class="desktop-topbar">
+    <a class="desktop-pill active" href="#d-rice">&#127834; Rice &amp; Main</a>
+    <a class="desktop-pill" href="#d-curries">&#127835; Curries</a>
+    <a class="desktop-pill" href="#d-sides">&#129367; Bengali Sides</a>
+    <a class="desktop-pill" href="#d-snacks">&#127841; Snacks &amp; Sweets</a>
+  </nav>
+  <div class="magazine">
+
+    <!-- Rice full width -->
+    <div class="mag-block" id="d-rice">
+      <div class="mag-section-head">
+        <span class="mag-section-label">Main Course</span>
+        <div class="mag-section-title">Rice &amp; Main Dishes</div>
+        <div class="mag-section-subtitle">Trays sized for group servings</div>
+      </div>
+      <div class="mag-rule"></div>
+      <table class="mag-rice-table">
+        <thead><tr><th>Item</th><th>&#189; Tray &nbsp;(~10 servings)</th><th>Full Tray</th></tr></thead>
+        <tbody>
+          <tr><td>Beef Biriyani</td><td>$70</td><td>$140</td></tr>
+          <tr><td>Beef Tehari</td><td>$70</td><td>$140</td></tr>
+          <tr><td>Chicken Biriyani</td><td>$60</td><td>$110</td></tr>
+          <tr><td>* Morog Polao</td><td>$65</td><td>$120</td></tr>
+          <tr><td>Polao</td><td>$30</td><td>$60</td></tr>
+          <tr><td>Khichuri</td><td>$30</td><td>$60</td></tr>
+        </tbody>
+      </table>
+      <p class="mag-footnote">* Full tray Morog Polao includes 12 leg quarters.</p>
+    </div>
+
+    <!-- Curries + Sides two-col -->
+    <div class="mag-two-col">
+      <div id="d-curries">
+        <span class="mag-col-label">Slow Cooked</span>
+        <div class="mag-col-title">&#127835; Curries</div>
+        <div class="mag-col-subtitle">Freshly prepared with traditional spices</div>
+        <div class="mag-col-rule"></div>
+        <div class="mag-item"><span class="mag-item-name">Beef Curry <small>(per lb)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$16</span></div>
+        <div class="mag-item"><span class="mag-item-name">Goat Curry <small>(per lb)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$23</span></div>
+        <div class="mag-item"><span class="mag-item-name">Duck Curry <small>(1 Whole Duck)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$80</span></div>
+        <div class="mag-item"><span class="mag-item-name">Chicken Curry <small>(1 Whole Chicken)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$30</span></div>
+        <div class="mag-item"><span class="mag-item-name">Chicken Roast <small>(per piece)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$6</span></div>
+        <div class="mag-item"><span class="mag-item-name">Pomfret Bhuna <small>(1 Whole Fish)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$25</span></div>
+      </div>
+      <div id="d-sides">
+        <span class="mag-col-label">Accompaniments</span>
+        <div class="mag-col-title">&#129367; Bengali Sides</div>
+        <div class="mag-col-subtitle">Traditional accompaniments</div>
+        <div class="mag-col-rule"></div>
+        <div class="mag-item"><span class="mag-item-name">Thick Dal <small>(&#189; tray &middot; ~10 srv)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$40</span></div>
+        <div class="mag-item"><span class="mag-item-name">Dal &ndash; Regular <small>(&#189; tray &middot; ~10 srv)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$20</span></div>
+        <div class="mag-item"><span class="mag-item-name">Broccoli / Cauliflower + Fish Vorta <small>(~5 srv)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$20</span></div>
+        <div class="mag-item"><span class="mag-item-name">Mixed Vegetable <small>(~5 srv)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$15</span></div>
+        <div class="mag-item"><span class="mag-item-name">Alu Vorta <small>(~5 srv)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$10</span></div>
+        <div class="mag-item"><span class="mag-item-name">Begun Vorta <small>(~5 srv)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$15</span></div>
+        <div class="mag-item"><span class="mag-item-name">Dal Vorta <small>(~5 srv)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$15</span></div>
+        <div class="mag-item"><span class="mag-item-name">Eggs Bhuna <small>(per piece)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$1.50</span></div>
+      </div>
+    </div>
+
+    <!-- Snacks full width, two-col items -->
+    <div class="mag-block" id="d-snacks">
+      <div class="mag-section-head">
+        <span class="mag-section-label">Bites &amp; Desserts</span>
+        <div class="mag-section-title">&#127841; Snacks &amp; Sweets</div>
+      </div>
+      <div class="mag-rule"></div>
+      <div class="mag-items-two-col">
+        <div>
+          <div class="mag-item"><span class="mag-item-name">Chicken Chop <small>(per piece)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$3</span></div>
+          <div class="mag-item"><span class="mag-item-name">Egg Chop <small>(per piece)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$2</span></div>
+          <div class="mag-item"><span class="mag-item-name">Singara <small>(per piece)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$2</span></div>
+          <div class="mag-item"><span class="mag-item-name">Samosa <small>(per piece)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$2</span></div>
+          <div class="mag-item"><span class="mag-item-name">Alu Chop <small>(per piece)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$1.50</span></div>
+          <div class="mag-item"><span class="mag-item-name">Beguni <small>(per piece)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$1</span></div>
+          <div class="mag-item"><span class="mag-item-name">Piyazu <small>(per piece)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$1</span></div>
+        </div>
+        <div>
+          <div class="mag-item"><span class="mag-item-name">Halim <small>(&#189; tray &middot; ~10 srv)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$70</span></div>
+          <div class="mag-item"><span class="mag-item-name">Nawabi Semai <small>(&#189; tray)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$50</span></div>
+          <div class="mag-item"><span class="mag-item-name">Firni <small>(&#189; tray &middot; ~10 srv)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$30</span></div>
+          <div class="mag-item"><span class="mag-item-name">Dudh Lau <small>(&#189; tray &middot; ~10 srv)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$30</span></div>
+          <div class="mag-item"><span class="mag-item-name">Pudding &ndash; Full Size <small>(8 pcs)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$25</span></div>
+          <div class="mag-item"><span class="mag-item-name">Patishapta Pitha <small>(per piece)</small></span><span class="mag-item-dots"></span><span class="mag-item-price">$2</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-body">
+    <div class="footer-col" style="align-items:center;text-align:center;">
+      <span class="footer-label">Call for Orders</span>
+      <span class="footer-value">(309) 750-6662</span>
+      <span class="footer-sub">Custom menus available</span>
+    </div>
+  </div>
+  <div class="footer-bottom">All items freshly prepared to order &nbsp;&middot;&nbsp; Prices subject to change</div>
 </footer>
 
 <script>
-  // Toggle section open/close
-  function toggleSection(header) {
-    const body = header.nextElementSibling.nextElementSibling;
-    const isCollapsed = body.classList.contains('collapsed');
-    body.classList.toggle('collapsed');
-    header.classList.toggle('collapsed');
-    header.setAttribute('aria-expanded', isCollapsed ? 'true' : 'false');
-  }
+function toggleMobile(header){
+  var body=header.nextElementSibling.nextElementSibling;
+  var c=body.classList.toggle('collapsed');
+  header.classList.toggle('collapsed',c);
+}
+var fadeObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.05});
+document.querySelectorAll('.mobile-section').forEach(function(s){fadeObs.observe(s);});
 
-  // Intersection observer for fade-in
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.05 });
+var mSecs=document.querySelectorAll('.mobile-section[id]');
+var mBtns=document.querySelectorAll('.mobile-nav-btn');
+var mObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      mBtns.forEach(function(b){b.classList.remove('active');});
+      var m=document.querySelector('.mobile-nav-btn[href="#'+e.target.id+'"]');
+      if(m)m.classList.add('active');
+    }
+  });
+},{rootMargin:'-35% 0px -60% 0px'});
+mSecs.forEach(function(s){mObs.observe(s);});
 
-  document.querySelectorAll('.menu-section').forEach(s => observer.observe(s));
-
-  // Highlight active nav pill on scroll
-  const sections = document.querySelectorAll('.menu-section[id]');
-  const pills = document.querySelectorAll('.nav-pill');
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        pills.forEach(p => p.classList.remove('active'));
-        const match = document.querySelector(`.nav-pill[href="#${e.target.id}"]`);
-        if (match) match.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px' });
-
-  sections.forEach(s => navObserver.observe(s));
+var dSecs=document.querySelectorAll('[id^="d-"]');
+var dPills=document.querySelectorAll('.desktop-pill');
+var dObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      dPills.forEach(function(p){p.classList.remove('active');});
+      var m=document.querySelector('.desktop-pill[href="#'+e.target.id+'"]');
+      if(m)m.classList.add('active');
+    }
+  });
+},{rootMargin:'-25% 0px -65% 0px'});
+dSecs.forEach(function(s){dObs.observe(s);});
 </script>
 </body>
 </html>
